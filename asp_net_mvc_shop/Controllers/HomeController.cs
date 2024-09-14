@@ -8,7 +8,7 @@ namespace asp_net_mvc_shop.Controllers
     {
         public IActionResult Index()
         {
-            //~Views/Controller/Action     `Views/Home/Index
+            //~Views/Controller/Action     ~Views/Home/Index
             return View();
         }
 

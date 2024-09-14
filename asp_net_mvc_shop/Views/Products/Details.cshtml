@@ -1,0 +1,16 @@
+﻿@model asp_net_mvc_shop.Models.Product
+
+
+<div class="card text-center">
+    <div class="card-header">
+        <h1>Product Detail Information</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">
+            @Model.Category
+            <span class="badge bg-primary">@Model.Price grn</span>
+        </p>
+        <a asp-action="Index" class="btn btn-primary">Back</a>
+    </div>
+</div>
