@@ -1,26 +1,30 @@
 ﻿using asp_net_mvc_shop.Helpers;
 using asp_net_mvc_shop.Models;
+using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace asp_net_mvc_shop.Controllers
 {
     public class ProductsController : Controller
     {
-        //product list
-        List<Product> products;
+
+        ShopDbContext dbContext;
         public ProductsController()
         {
-            products = new List<Product>(Seeder.GetProducts()); 
+            dbContext = new ShopDbContext();
         }
         public IActionResult Index()
         {
             //TODO : get data from DB
-            return View(products);
+            return View(dbContext.Products.ToList());
         }
-        public IActionResult Details(int id)
+        public IActionResult Details(int id)//7
         {
-            var product = products.FirstOrDefault(x=> x.Id == id);
-            if (product == null) { return NotFound(); }
+            if (id < 0) { return BadRequest(); }//error 400
+      
+            var product = dbContext.Products.Find(id);  
+         
+            if (product == null) { return NotFound(); }//error 404
             return View(product);
         }
     }

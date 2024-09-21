@@ -1,9 +1,8 @@
-﻿@model List<asp_net_mvc_shop.Models.Product>
+﻿@model List<DataAccess.Entities.Product>
 
 <h1>Product List</h1>
 
 @* Razor Engine operators : @if... @for.. @foreach @switch  *@ 
-
 @if (Model.Any())
 {
     <p>Count of Products : @Model.Count</p>
