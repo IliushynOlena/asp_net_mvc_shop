@@ -1,0 +1,29 @@
+﻿@model DataAccess.Entities.Product
+<h1>Create New Product</h1>
+
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" type="text" class="form-control" placeholder="Enter name">
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input asp-for="Price" type="number" class="form-control" placeholder="Enter price" >
+    </div>
+ 
+    <div class="col-md-12">
+        <label asp-for="CategoryId" class="form-label">Category</label>
+        <select asp-for="CategoryId" asp-items="@ViewBag.CategoryList" class="form-select">
+            <option selected>Choose...</option>
+           
+        </select>
+    </div>
+    <div class="col-6">
+        <button type="submit" class="btn btn-primary w-100">Create</button>
+    </div>
+    <div class="col-6">
+        <a asp-action="Index" class="btn btn-primary w-100">Back</a>
+    </div>
+   
+</form>
