@@ -5,6 +5,9 @@
     <div class="card-header">
         <h1>Product Detail Information</h1>
     </div>
+    <div class="product-image">
+        <img src="@(@Model.ImagePath??"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")" class="card-img-top" alt="Product image">
+    </div>
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
         <p class="card-text">

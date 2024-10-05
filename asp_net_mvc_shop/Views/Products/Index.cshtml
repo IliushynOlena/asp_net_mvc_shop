@@ -14,7 +14,9 @@
         
                 <div class="col">
                     <div class="card">
-                       @*  <img src="..." class="card-img-top" alt="..."> *@
+                        <div class="product-card-image">
+                        <img src="@(product.ImagePath??"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")" class="card-img-top" alt="Product image">
+                        </div>
                         <div class="card-body">
                         <h5 class="card-title">@product.Name</h5>
                             <p class="card-text"> 
@@ -22,7 +24,15 @@
                                 
                                 <span class="badge bg-primary">@product.Price grn</span>
                             </p>
-                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dark">Show Details</a>
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dark">
+                            <i class="bi bi-info-square"></i>
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
                         </div>
                     </div>
                 </div>                    

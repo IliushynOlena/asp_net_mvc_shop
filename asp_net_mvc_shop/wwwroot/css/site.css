@@ -23,3 +23,17 @@ body {
 header, footer{
     background-color:burlywood;
 }
+.product-card-image{
+    height:100px;
+    margin-top:10px;
+}
+
+.product-image {
+    height: 400px;
+    margin-top: 20px;
+}
+.product-card-image img, .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
