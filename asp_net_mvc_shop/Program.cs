@@ -1,4 +1,6 @@
 using DataAccess;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,10 @@ builder.Services.AddControllersWithViews();
 
 string connString = builder.Configuration.GetConnectionString("LocalDb")!;
 builder.Services.AddDbContext<ShopDbContext>(opt => opt.UseSqlServer(connString));
+
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

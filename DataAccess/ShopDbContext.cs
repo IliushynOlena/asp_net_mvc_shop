@@ -33,6 +33,9 @@ namespace DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //Fluent API 
+
+
             //Initialization - Seeder
             modelBuilder.SeedCategories();
             modelBuilder.SeedProducts();
