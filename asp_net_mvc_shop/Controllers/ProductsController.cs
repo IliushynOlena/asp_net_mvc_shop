@@ -1,5 +1,6 @@
 ﻿using asp_net_mvc_shop.Helpers;
 using asp_net_mvc_shop.Models;
+using asp_net_mvc_shop.Services;
 using DataAccess;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -9,22 +10,22 @@ namespace asp_net_mvc_shop.Controllers
 {
     public class ProductsController : Controller
     {
-        //CRUD Interface
-        private readonly ShopDbContext dbContext;
-        public ProductsController(ShopDbContext context)
+        private readonly IProductService service;
+
+        public ProductsController(IProductService service)
         {
-            dbContext = context;
+            this.service = service;
         }
         public IActionResult Index()
         {
             //GET : ~/Products/Index
             //TODO : get data from DB
-            return View(dbContext.Products.ToList());
+            return View(service.GetAll());
         }
         //GET : ~/Products/Edit
         public IActionResult Edit(int id)
         {
-            var product = dbContext.Products.Find(id);
+            var product = service.GetById(id);
             if (product == null) return NotFound();
             LoadCategories();
             return View(product);
@@ -38,21 +39,13 @@ namespace asp_net_mvc_shop.Controllers
                 LoadCategories();
                 return View(product);
             }
-            dbContext.Products.Update(product);
-            dbContext.SaveChanges();
-
-          
+           service.Edit(product);
 
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Delete(int id)
         {
-            var find =  dbContext.Products.Find(id);
-            if(find == null) return NotFound(); 
-
-            dbContext.Products.Remove(find);
-            dbContext.SaveChanges();
-
+            service.Delete(id);  
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Details(int id)//7
@@ -60,7 +53,7 @@ namespace asp_net_mvc_shop.Controllers
             //GET : ~/Products/Details
             if (id < 0) { return BadRequest(); }//error 400
       
-            var product = dbContext.Products.Find(id);  
+            var product = service.GetById(id); 
          
             if (product == null) { return NotFound(); }//error 404
             return View(product);
@@ -69,7 +62,7 @@ namespace asp_net_mvc_shop.Controllers
         {
             //ViewData and ViewBag
             //ViewData["List"] = new List<int> { 1, 2, 3 }; // List as Object
-            ViewBag.CategoryList = new SelectList(dbContext.Categories.ToList(),
+            ViewBag.CategoryList = new SelectList(service.GetCategories(),
                 nameof(Category.Id), nameof(Category.Name));
         }
         //GET : ~/Products/Create
@@ -91,9 +84,7 @@ namespace asp_net_mvc_shop.Controllers
                 return View(product);
             }
 
-            //add to database
-            dbContext.Products.Add(product);
-            dbContext.SaveChanges();    
+           service.Create(product);
             return RedirectToAction(nameof(Index));
         }
     }

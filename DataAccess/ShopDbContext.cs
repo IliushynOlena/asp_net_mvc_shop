@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities;
+﻿using DataAccess.Configurations;
+using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,8 +34,19 @@ namespace DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //Fluent API 
+            ////Fluent API 
+            //modelBuilder.Entity<Product>().HasKey(p => p.Id);   
+            //modelBuilder.Entity<Product>()
+            //    .Property(p=>p.Name)
+            //    .IsRequired()
+            //    .HasMaxLength(200);
 
+            ////configuration relationship
+            //modelBuilder.Entity<Product>()
+            //    .HasOne(p => p.Category)
+            //    .WithMany(c => c.Products)
+            //    .HasForeignKey(p => p.CategoryId);  
+            modelBuilder.ApplyConfiguration(new ProductConfigurations());
 
             //Initialization - Seeder
             modelBuilder.SeedCategories();

@@ -1,3 +1,4 @@
+using asp_net_mvc_shop.Services;
 using DataAccess;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -11,9 +12,12 @@ builder.Services.AddControllersWithViews();
 string connString = builder.Configuration.GetConnectionString("LocalDb")!;
 builder.Services.AddDbContext<ShopDbContext>(opt => opt.UseSqlServer(connString));
 
-
+//add Fluent Valdators
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+
+//Add Custom Services
+builder.Services.AddScoped<IProductService, ProductService>();  
 
 var app = builder.Build();
 
