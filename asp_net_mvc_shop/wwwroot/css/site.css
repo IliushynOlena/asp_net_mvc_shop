@@ -41,3 +41,8 @@ header, footer{
     color: black;
     background-color: aqua;
 }
+
+a.card-link-block{
+    color:inherit;
+    text-decoration:none;
+}

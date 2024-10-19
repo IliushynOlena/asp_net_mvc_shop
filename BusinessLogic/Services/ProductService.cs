@@ -1,19 +1,10 @@
-﻿using DataAccess;
+﻿using BusinessLogic.Interfaces;
+using DataAccess;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace asp_net_mvc_shop.Services
 {
-    public interface IProductService
-    {
-        //CRUD Interface
-        List<Product> GetAll();
-        List<Category> GetCategories();
-        Product? GetById(int id);
-        void Create(Product product);
-        void Edit(Product product);
-        void Delete(int id);
-    }
     public class ProductService : IProductService
     {
         private readonly ShopDbContext context;
@@ -41,6 +32,11 @@ namespace asp_net_mvc_shop.Services
         {
             context.Products.Update(product);
             context.SaveChanges();
+        }
+
+        public List<Product> Get(int[] ids)
+        {
+            return context.Products.Where(p =>ids.Contains(p.Id)).ToList();
         }
 
         public List<Product> GetAll()

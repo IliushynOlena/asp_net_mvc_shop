@@ -1,6 +1,6 @@
 ﻿using asp_net_mvc_shop.Helpers;
 using asp_net_mvc_shop.Models;
-using asp_net_mvc_shop.Services;
+using BusinessLogic.Interfaces;
 using DataAccess;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +48,7 @@ namespace asp_net_mvc_shop.Controllers
             service.Delete(id);  
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Details(int id)//7
+        public IActionResult Details(int id, string returnUrl = null)//7
         {
             //GET : ~/Products/Details
             if (id < 0) { return BadRequest(); }//error 400
@@ -56,6 +56,7 @@ namespace asp_net_mvc_shop.Controllers
             var product = service.GetById(id); 
          
             if (product == null) { return NotFound(); }//error 404
+            ViewBag.ReturnUrl = returnUrl;
             return View(product);
         }
         private void LoadCategories()

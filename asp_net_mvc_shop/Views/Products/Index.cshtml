@@ -11,33 +11,12 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var product in Model)
         {
-
             <div class="col">
                 <div class="card">
-                    @*  <div class="product-card-image">
-            <img src="@(product.ImagePath??"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")" class="card-img-top" alt="Product image">
-            </div> *@
-                    <div id="carousel-@product.Id" class="carousel slide" @* data-bs-ride="carousel" *@>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active product-card-image">
-                                <img src="@product.ImagePath" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item product-card-image">
-                                <img src="https://img.ktc.ua/img/base/1/4/452124.jpg" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item product-card-image">
-                                <img src="https://img.ktc.ua/img/base/1/1/452121.jpg" class="d-block w-100" alt="...">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@product.Id" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-@product.Id" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
+                     <div class="product-card-image">
+                             <img src="@(product.ImagePath??"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")" class="card-img-top" alt="Product image">
+                     </div>
+                   
                     <div class="card-body">
                         <h5 class="card-title">@product.Name</h5>
                         <p class="card-text">
@@ -45,7 +24,11 @@
 
                             <span class="badge bg-primary">@product.Price grn</span>
                         </p>
-                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dark">
+                        <a 
+                            asp-action="Details" 
+                            asp-route-id="@product.Id"
+                            
+                           class="btn btn-dark">
                             <i class="bi bi-info-square"></i>
                         </a>
                         <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">

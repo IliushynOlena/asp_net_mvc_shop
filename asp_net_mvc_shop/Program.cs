@@ -1,4 +1,5 @@
 using asp_net_mvc_shop.Services;
+using BusinessLogic.Interfaces;
 using DataAccess;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -17,7 +18,14 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
 //Add Custom Services
-builder.Services.AddScoped<IProductService, ProductService>();  
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddSession(options =>
+{
+    //options.IdleTimeout = TimeSpan.FromDays(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -35,6 +43,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
