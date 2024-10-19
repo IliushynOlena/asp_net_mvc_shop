@@ -6,40 +6,25 @@ namespace asp_net_mvc_shop.Controllers
 {
     public class CartController : Controller
     {
-        private readonly IProductService service;
+        private readonly ICartService cartService;
 
-        public CartController(IProductService service)
+        public CartController(ICartService service)
         {
-            this.service = service;
+            this.cartService = service;
         }
         public IActionResult Index()
-        {
-            //1 5 7 8 9 99 25 14
-            var productIds = HttpContext.Session.GetObject<List<int>>("cart");
-            List<Product> products = new List<Product>();
-
-           
-            if (productIds != null)
-            {
-                products = service.Get(productIds.ToArray());
-            }
-            return View(products);
+        {            
+            return View(cartService.GetProducts());
         }
         public IActionResult Add(int productId, string returnUrl )
         {
-            var productIds = HttpContext.Session.GetObject<List<int>>("cart");
-            if (productIds == null) { productIds = new List<int>(); }
-            productIds.Add(productId);
-            HttpContext.Session.SetObject("cart", productIds);
+            cartService.Add(productId);    
             return Redirect(returnUrl);
         }
 
         public IActionResult Remove(int productId, string returnUrl)
         {
-            var productIds = HttpContext.Session.GetObject<List<int>>("cart");
-            if (productIds == null) { productIds = new List<int>(); }
-            productIds.Remove(productId);
-            HttpContext.Session.SetObject("cart", productIds);
+            cartService.Remove(productId);
             return Redirect(returnUrl);
         }
     }

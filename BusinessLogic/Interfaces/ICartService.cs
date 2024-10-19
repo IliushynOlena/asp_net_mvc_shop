@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Interfaces
 {
-    public interface ICartSevice
+    public interface ICartService
     {
         List<Product> GetProducts();
         void Add(int productId);
         void Remove(int productId);
+
+        bool IsInCart(int productId);
     }
 }

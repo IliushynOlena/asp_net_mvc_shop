@@ -1,5 +1,6 @@
 using asp_net_mvc_shop.Services;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using DataAccess;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -19,6 +20,7 @@ builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssembli
 
 //Add Custom Services
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartSevice>();
 
 builder.Services.AddSession(options =>
 {
@@ -26,6 +28,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

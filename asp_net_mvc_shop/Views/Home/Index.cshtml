@@ -1,4 +1,9 @@
-﻿
+﻿@using BusinessLogic.Interfaces
+@using BusinessLogic.Services
+
+
+@model List<DataAccess.Entities.Product>
+@inject ICartService CartService
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -46,12 +51,19 @@
 
                             <span class="badge bg-primary">@product.Price grn</span>
                         </p>
+                            @if (CartService.IsInCart(product.Id))
+                            {
+                                <a asp-controller="Cart" asp-action="Remove" asp-route-productId="@product.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-danger mt-2">
+                                    <i class="bi bi-bag-plus mr-3"></i>Remove from Cart
+                                </a>
+                                
+                            }
+                            else
+                            {
                             <a asp-controller="Cart" asp-action="Add" asp-route-productId="@product.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-success mt-2">
                                 <i class="bi bi-bag-plus mr-3"></i>Add to Cart
                             </a>
-                            <a asp-controller="Cart" asp-action="Remove" asp-route-productId="@product.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-danger mt-2">
-                                <i class="bi bi-bag-plus mr-3"></i>Remove from Cart
-                            </a>
+                            }
                        @*  <a asp-controller="Products" 
                             asp-action="Details" 
                             asp-route-id="@product.Id" 
