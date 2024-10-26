@@ -87,6 +87,6 @@ namespace asp_net_mvc_shop.Controllers
 
            service.Create(product);
             return RedirectToAction(nameof(Index));
-        }
+         }
     }
 }

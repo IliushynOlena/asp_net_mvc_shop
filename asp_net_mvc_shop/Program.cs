@@ -2,6 +2,7 @@ using asp_net_mvc_shop.Services;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using DataAccess;
+using DataAccess.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssembli
 //Add Custom Services
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartSevice>();
+builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 
 builder.Services.AddSession(options =>
 {
