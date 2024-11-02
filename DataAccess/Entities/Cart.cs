@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entities
 {
-    public class Cart
+    public partial class Cart
     {
         public int Id { get; set; }
-        //public int UserId { get; set; }
+    }
+
+    public partial class Cart
+    {
         public ICollection<Product> Products { get; set; }
     }
 }

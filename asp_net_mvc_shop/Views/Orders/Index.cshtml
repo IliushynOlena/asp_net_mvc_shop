@@ -1,33 +1,33 @@
-﻿@model List<DataAccess.Entities.Product>
+﻿@model List<DataAccess.Entities.Order>
 
 <div class="card text-center">
     <div class="card-header">
-        Your Cart
+        Order History
     </div>
     <div class="card-body">
-        <h5 class="card-title">Product List</h5>
+        <h5 class="card-title"> List</h5>
         <div>
             @if (!Model.Any())
             {
-                <p>No products in the cart</p>
+                <p>No orders here yet!!!</p>
             }
             <ol class="list-group list-group-numbered">
                 @foreach (var p in Model)
                 {
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
-                            <div class="fw-bold">@p.Name</div>
+                            <div class="fw-bold">@p.Id - @p.Date</div>
                             Content for list item
                         </div>
-                        <span class="badge bg-primary rounded-pill">@p.Price$</span>
+                        <span class="badge bg-primary rounded-pill">@p.Total$</span>
                     </li>
                 }
             </ol>
 
         </div>
-        <a asp-controller="Orders" asp-action="Create" class="btn btn-primary mt-3">Confirm</a>
+      
     </div>
     <div class="card-footer text-muted">
-        Count : @Model.Count();
+        Order Count : @Model.Count();
     </div>
 </div>

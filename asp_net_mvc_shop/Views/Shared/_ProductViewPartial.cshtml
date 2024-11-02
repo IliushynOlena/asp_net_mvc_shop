@@ -1,0 +1,57 @@
+﻿@using BusinessLogic.Interfaces
+
+@model DataAccess.Entities.Product;
+@inject ICartService CartService
+
+<div class="col">
+    <a class="card-link-block"
+       asp-controller="Products"
+       asp-action="Details"
+       asp-route-id="@Model.Id"
+       asp-route-returnUrl="@Context.Request.Path">
+        <div class="card">
+            <div id="carousel-@Model.Id" class="carousel slide" @* data-bs-ride="carousel" *@>
+                <div class="carousel-inner">
+                    <div class="carousel-item active product-card-image">
+                        <img src="@Model.ImagePath" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item product-card-image">
+                        <img src="https://img.ktc.ua/img/base/1/4/452124.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item product-card-image">
+                        <img src="https://img.ktc.ua/img/base/1/1/452121.jpg" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@Model.Id" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-@Model.Id" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">
+                    @Model.Category?.Name
+                    <span class="badge bg-primary">@Model.Price grn</span>
+                </p>
+                @if (CartService.IsInCart(Model.Id))
+                {
+                    <a asp-controller="Cart" asp-action="Remove" asp-route-productId="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-danger mt-2">
+                        <i class="bi bi-bag-plus mr-3"></i>Remove from Cart
+                    </a>
+
+                }
+                else
+                {
+                    <a asp-controller="Cart" asp-action="Add" asp-route-productId="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-success mt-2">
+                        <i class="bi bi-bag-plus mr-3"></i>Add to Cart
+                    </a>
+                }
+              
+            </div>
+        </div>
+    </a>
+</div>
