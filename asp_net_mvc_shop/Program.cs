@@ -8,6 +8,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using DataAccess.Entities;
+using asp_net_mvc_shop;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +18,15 @@ builder.Services.AddControllersWithViews();
 string connString = builder.Configuration.GetConnectionString("LocalDb")!;
 builder.Services.AddDbContext<ShopDbContext>(opt => opt.UseSqlServer(connString));
 
-builder.Services.AddDefaultIdentity<User>
-    (options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ShopDbContext>();
+//builder.Services.AddDefaultIdentity<User>
+//    (options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddRoles<IdentityRole>()
+//    .AddRoleManager<RoleManager<IdentityRole>>()
+//    .AddEntityFrameworkStores<ShopDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>()
+               .AddDefaultTokenProviders()
+               .AddDefaultUI()
+               .AddEntityFrameworkStores<ShopDbContext>();
 
 //add Fluent Valdators
 builder.Services.AddFluentValidationAutoValidation();
@@ -40,6 +47,13 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+//RoleSeeder.SeedRoles(app.Services).Wait();
+//app.Services.SeedRoles().Wait();
+using (var scope = app.Services.CreateScope())
+{
+    Seeder.SeedRoles(scope.ServiceProvider).Wait();
+    Seeder.SeedAdmin(scope.ServiceProvider).Wait();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

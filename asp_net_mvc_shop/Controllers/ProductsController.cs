@@ -3,11 +3,13 @@ using asp_net_mvc_shop.Models;
 using BusinessLogic.Interfaces;
 using DataAccess;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace asp_net_mvc_shop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private readonly IProductService service;
@@ -16,6 +18,7 @@ namespace asp_net_mvc_shop.Controllers
         {
             this.service = service;
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             //GET : ~/Products/Index
@@ -48,6 +51,7 @@ namespace asp_net_mvc_shop.Controllers
             service.Delete(id);  
             return RedirectToAction(nameof(Index));
         }
+        [AllowAnonymous]
         public IActionResult Details(int id, string returnUrl = null)//7
         {
             //GET : ~/Products/Details
